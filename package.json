@@ -1,0 +1,11 @@
+{
+  "name": "empty_project",
+  "version": "1.0.0",
+  "description": "empty project template",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Eugene Sheuchuk <sheuchuk.ed@gmail.com>",
+  "license": "ISC"
+}
