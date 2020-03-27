@@ -23,3 +23,5 @@ describe positions in package.json:
 "terser-webpack-plugin" // the webpack plugin that minimize size js files
 
 "optimize-css-assets-webpack-plugin" // the webpack plugin that minimize size css files
+
+"sass-loader" & "node-sass" // the webpack plugin that accept scss file

@@ -26,7 +26,7 @@ module.exports = {
     context: path.resolve(__dirname, 'src'),
     //mode: 'development', // this config we set in package.json script
     ////// the 'entry' property use to set start files
-    entry: './index.js', // set the entry file for webpack
+    entry: ['@babel/polyfill', './index.js', './index.jsx'], // set the entry file for webpack
     ///// if we want to use many starting files we need set entry option as object
     // entry: {
     //  main: './src/index.js',
@@ -67,6 +67,10 @@ module.exports = {
                 use: [MiniCssExtractPlugin.loader, 'css-loader'],
             },
             {
+                test: /\.s[ac]ss$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+            },
+            {
                 // used import images file into css
                 test: /\.(png|svg|jpg|gif)$/,
                 use: ['file-loader'],
@@ -75,6 +79,39 @@ module.exports = {
                 // used import fonts file into css
                 test: /\.(ttf|woff|woof2|eot)$/,
                 use: ['file-loader'],
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env'],
+                        plugins: ["@babel/plugin-proposal-class-properties"],
+                    }
+                },
+            },
+            {
+                test: /\.ts$/,
+                exclude: /node_modules/,
+                loader: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env', '@babel/preset-typescript'],
+                        plugins: ["@babel/plugin-proposal-class-properties"],
+                    }
+                },
+            },
+            {
+                test: /\.jsx$/,
+                exclude: /node_modules/,
+                loader: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                        plugins: ["@babel/plugin-proposal-class-properties"],
+                    }
+                },
             },
         ]
     },
