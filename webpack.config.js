@@ -1,6 +1,24 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
+// save system variable
+const isDev = process.env.NODE_ENV === 'development';
+
+//create an optimization object
+const optimize = () => {
+    const config = {};
+    if (!isDev) {
+        config.minimizer = [
+            new OptimizeCssAssetsPlugin(),
+            new TerserPlugin(),
+        ];
+    }
+    return config;
+};
 
 module.exports = {
     //// the 'context' property set the work directory, so we can set the paths below from that directory.
@@ -33,6 +51,9 @@ module.exports = {
             template: './index.html',
         }),
         new CleanWebpackPlugin(),
+        new MiniCssExtractPlugin({
+            filename: '[name].[hash].css'
+        }),
     ],
     //// the 'module' property described what loaders used and their rules
     module: {
@@ -41,8 +62,21 @@ module.exports = {
                 // parameter 'test' accept a regular expression which describes a file extension
                 test: /\.css$/,
                 // webpack use loaders from right to left. the right way is important
-                use: ['style-loader', 'css-loader'],
+                // if we do not use MiniCssExtractPlugin set property use like next template
+                // use: ['style-loader', 'css-loader'],
+                use: [MiniCssExtractPlugin.loader, 'css-loader'],
+            },
+            {
+                // used import images file into css
+                test: /\.(png|svg|jpg|gif)$/,
+                use: ['file-loader'],
+            },
+            {
+                // used import fonts file into css
+                test: /\.(ttf|woff|woof2|eot)$/,
+                use: ['file-loader'],
             },
         ]
-    }
+    },
+    optimization: optimize(),
 };
