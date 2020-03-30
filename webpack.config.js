@@ -69,6 +69,21 @@ module.exports = {
                 // if we do not use MiniCssExtractPlugin set property use like next template
                 // use: ['style-loader', 'css-loader'],
                 use: [MiniCssExtractPlugin.loader, 'css-loader'],
+                // to use css modules and css import same time
+                exclude: /\.module\.css$/,
+            },
+            {
+                // add css.modules to project
+                test: /\.css$/,
+                use: [MiniCssExtractPlugin.loader,
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1,
+                            modules: true
+                        }
+                    }],
+                include: /\.module\.css$/,
             },
             {
                 test: /\.s[ac]ss$/,
