@@ -43,6 +43,10 @@ module.exports = {
         filename: '[name].[hash].js', // result main._some_hash_.js
         path: path.resolve(__dirname, 'dist'), // set the path to result folder
     },
+    //// add extensions to auto import on webpack
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
     ///// the 'output' property described what plugins used and their rules
     // in object we can set the params to plugin
     plugins: [
