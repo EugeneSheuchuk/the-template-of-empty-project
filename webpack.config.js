@@ -42,6 +42,7 @@ module.exports = {
         //// to avoid hashing files on browser we use webpack [hash] pattern
         filename: '[name].[hash].js', // result main._some_hash_.js
         path: path.resolve(__dirname, 'dist'), // set the path to result folder
+        publicPath: '/'
     },
     //// add extensions to auto import on webpack
     resolve: {
@@ -100,34 +101,12 @@ module.exports = {
                 use: ['file-loader'],
             },
             {
-                test: /\.js$/,
+                test: /\.(js|jsx|ts|tsx)$/,
                 exclude: /node_modules/,
                 loader: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env'],
-                        plugins: ["@babel/plugin-proposal-class-properties"],
-                    }
-                },
-            },
-            {
-                test: /\.ts$/,
-                exclude: /node_modules/,
-                loader: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env', '@babel/preset-typescript'],
-                        plugins: ["@babel/plugin-proposal-class-properties"],
-                    }
-                },
-            },
-            {
-                test: /\.jsx$/,
-                exclude: /node_modules/,
-                loader: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                        presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
                         plugins: ["@babel/plugin-proposal-class-properties"],
                     }
                 },
